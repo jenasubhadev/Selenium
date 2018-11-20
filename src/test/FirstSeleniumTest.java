@@ -41,7 +41,7 @@ public class FirstSeleniumTest {
 		}
 	}
 	public static void runTest(){
-		driver.get("https://google.com/");
+		driver.get("http://newlookcosmeticsurgery.com/");
 		driver.quit();
 	}
 
