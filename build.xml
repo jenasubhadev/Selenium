@@ -62,3 +62,33 @@
 	<target name="test">
 	</target>
 </project>
+
+cd /home/inspire4u/devops/deploy
+ls
+povms.war  start.war
+inspire4u@DADCA0000053:~/devops/deploy> cat /home/inspire4u/devops/deploy.sh
+echo "*********************************************"
+echo "Deploying the war file into Dev Environment"
+echo "*******************************************"
+echo "1.Switching as Tomcat User"
+sudo su - tomcat << EOF
+echo "2.Removing Old war back up files"
+rm -rf /home/inspire4u/devops/bkup/*
+echo "3.Stopping the Running Server Instance"
+sudo pai stop
+echo "4.Navigating to the Tomcat Deploy Folder: /srv/jas/data/povms/AppServer/tomcat_jvm/webapps"
+cd /srv/jas/data/povms/AppServer/tomcat_jvm/webapps
+echo "5.Storing the back up of the earlier deployed war in folder: /home/inspire4u/devops/bkup/"`date +%Y%m%d_%H%M%S`
+mkdir -p /home/inspire4u/devops/bkup/`date +%Y%m%d_%H%M%S`
+echo "6.Preparing the Prior Deployment Steps"
+mv start.war /home/inspire4u/devops/bkup/`date +%Y%m%d_%H%M%S`/
+mv start /home/inspire4u/devops/bkup/`date +%Y%m%d_%H%M%S`/
+echo "7.Starting the Tomcat Instances"
+cp /home/inspire4u/devops/deploy/start.war .
+sudo pai start
+echo "*********************************************"
+echo "Deployment is completed successfully"
+echo "*********************************************"
+echo "Server Logs can be viewed @ /var/log/tomcat/povms.log"
+EOF
+
